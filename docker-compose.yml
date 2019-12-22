@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    image: ariopra/pimcore6-alpine
+    volumes:
+      - .:/var/www/html
+    networks:
+      - backend
+  web:
+      image: pagespeed/nginx-pagespeed
+      ports:
+        - 4000:80
+      volumes:
+        - .:/var/www/html
+        - ./pimcore6.conf:/etc/nginx/conf.d/pimcore6.conf
+      networks:
+        - backend
+      depends_on:
+        - app
+networks:
+  backend:
